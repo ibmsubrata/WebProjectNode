@@ -20,16 +20,16 @@ stages:
       - type: stage
     properties:
       - name: APP_NAME
-        value: '${CF_APP}'
+        value: 'NodeWebApp'
         type: text
     jobs:
       - name: 'blue-green'
         type: deployer
         target:
-          url: '${CF_TARGET_URL}'
-          organization: '${CF_ORGANIZATION}'
-          space: '${CF_SPACE}'
-          application: '${CF_APP}'
+          url: 'https://api.ng.bluemix.net'
+          organization: 'Subrata'
+          space: 'Dev'
+          application: 'NodeWebApp'
         script: |-
           #!/bin/bash
           rm -rf ./node_modules.bak
