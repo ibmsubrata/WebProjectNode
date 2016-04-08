@@ -1,5 +1,5 @@
 declared-services
-- NodeWebStarter-cloudantNoSQLDB
+- NodeWebStarter-cloudantNoSQLDB:
   label: cloudantNoSQLDB
   plan: Shared
 applications:
@@ -10,4 +10,5 @@ applications:
   name: NodeWebStarter
   host: NodeWebStarter
   disk_quota: 1024M
-  
+  services:
+- NodeWebStarter-cloudantNoSQLDB
