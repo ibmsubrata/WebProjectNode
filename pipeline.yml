@@ -1,0 +1,38 @@
+---
+stages:
+  - name: Build
+    inputs:
+      - type: git
+        branch: master
+        url:https://github.com/ibmsubrata/WebProjectNode
+    triggers:
+      - type: commit
+    jobs:
+      - name: distribution
+        type: builder
+        build_type: npm
+  - name: Deploy
+    inputs:
+      - type: job
+        stage: Build
+        job: distribution
+    triggers:
+      - type: stage
+    properties:
+      - name: APP_NAME
+        value: '${CF_APP}'
+        type: text
+    jobs:
+      - name: 'blue-green'
+        type: deployer
+        target:
+          url: '${CF_TARGET_URL}'
+          organization: '${CF_ORGANIZATION}'
+          space: '${CF_SPACE}'
+          application: '${CF_APP}'
+        script: |-
+          #!/bin/bash
+          rm -rf ./node_modules.bak
+          rm -rf .git.bak
+
+          cf push "${CF_APP}"
